@@ -1,6 +1,7 @@
 package br.com.crud.bo;
 
 import br.com.crud.entity.Aluno;
+import br.com.crud.util.JPAUtil;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
@@ -8,7 +9,6 @@ import org.hibernate.criterion.Restrictions;
 
 import javax.enterprise.context.Dependent;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -19,8 +19,11 @@ import java.util.List;
 @Transactional
 public class AlunoBO {
 
-    @PersistenceContext(name = "CrudUnit")
     private EntityManager em;
+
+    public AlunoBO() {
+        em = JPAUtil.openConnection();
+    }
 
     public Aluno save(Aluno aluno){
         return em.merge(aluno);

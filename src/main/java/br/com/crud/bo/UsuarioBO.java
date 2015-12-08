@@ -1,10 +1,10 @@
 package br.com.crud.bo;
 
 import br.com.crud.entity.Usuario;
+import br.com.crud.util.JPAUtil;
 
 import javax.enterprise.context.Dependent;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -14,8 +14,12 @@ import java.util.List;
 @Dependent
 @Transactional
 public class UsuarioBO {
-    @PersistenceContext(name = "CrudUnit")
+
     private EntityManager em;
+
+    public UsuarioBO() {
+        em = JPAUtil.openConnection();
+    }
 
     public Usuario save(Usuario usuario){
         return em.merge(usuario);
